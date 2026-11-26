@@ -6,21 +6,28 @@
   <title>中级会计三科 · 错题大白话复习本</title>
   <style>
     :root {
-      --bg: #f6f7fb;
+      --bg: #f5f7fb;
       --card: #ffffff;
       --text: #1e293b;
       --muted: #64748b;
-      --border: #e2e8f0;
+      --border: #e5e7eb;
       --shiwu: #2563eb;
       --shiwu-bg: #eff6ff;
       --jingjifa: #d97706;
       --jingjifa-bg: #fffbeb;
       --caiguan: #059669;
       --caiguan-bg: #ecfdf5;
-      --danger: #dc2626;
-      --danger-bg: #fef2f2;
-      --radius: 16px;
-      --shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+      --ok: #16a34a;
+      --ok-bg: #f0fdf4;
+      --ok-border: #86efac;
+      --err: #dc2626;
+      --err-bg: #fef2f2;
+      --err-border: #fca5a5;
+      --sel: #2563eb;
+      --sel-bg: #eff6ff;
+      --sel-border: #93c5fd;
+      --radius: 14px;
+      --shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
@@ -36,12 +43,9 @@
     .hero {
       background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #0ea5e9 100%);
       color: #fff;
-      padding: 20px 16px 24px;
+      padding: 20px 16px 22px;
     }
-    .hero-inner {
-      max-width: 960px;
-      margin: 0 auto;
-    }
+    .hero-inner { max-width: 960px; margin: 0 auto; }
     .hero-top {
       display: flex;
       justify-content: space-between;
@@ -49,22 +53,9 @@
       gap: 12px;
       flex-wrap: wrap;
     }
-    .hero h1 {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-    .hero-sub {
-      margin: 6px 0 0;
-      font-size: 13px;
-      opacity: 0.9;
-    }
-    .hero-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .hero h1 { margin: 0; font-size: 21px; font-weight: 700; }
+    .hero-sub { margin: 5px 0 0; font-size: 13px; opacity: 0.9; }
+    .hero-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .btn-glass {
       display: inline-flex;
       align-items: center;
@@ -79,33 +70,22 @@
       border: 1px solid rgba(255,255,255,0.28);
       cursor: pointer;
       backdrop-filter: blur(6px);
-      transition: background 0.15s;
     }
     .btn-glass:hover { background: rgba(255,255,255,0.28); }
 
-    /* Stats */
     .stats-bar {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-top: 16px;
+      margin-top: 15px;
     }
     .stat-box {
       background: rgba(255,255,255,0.14);
       border-radius: 12px;
-      padding: 10px 12px;
-      backdrop-filter: blur(6px);
+      padding: 9px 12px;
     }
-    .stat-num {
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-    .stat-label {
-      font-size: 12px;
-      opacity: 0.88;
-      margin-top: 2px;
-    }
+    .stat-num { font-size: 19px; font-weight: 700; line-height: 1.25; }
+    .stat-label { font-size: 12px; opacity: 0.88; margin-top: 2px; }
     .progress-wrap {
       margin-top: 12px;
       background: rgba(255,255,255,0.2);
@@ -125,7 +105,7 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(246, 247, 251, 0.94);
+      background: rgba(245, 247, 251, 0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       padding: 10px 16px;
@@ -135,14 +115,13 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
     .tabs {
       display: flex;
       gap: 8px;
       overflow-x: auto;
       scrollbar-width: none;
-      padding-bottom: 2px;
     }
     .tabs::-webkit-scrollbar { display: none; }
     .tab-btn {
@@ -155,13 +134,8 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s;
     }
-    .tab-btn.active {
-      background: #1e293b;
-      color: #fff;
-      border-color: #1e293b;
-    }
+    .tab-btn.active { background: #1e293b; color: #fff; border-color: #1e293b; }
     .tab-btn[data-sub="shiwu"].active { background: var(--shiwu); border-color: var(--shiwu); }
     .tab-btn[data-sub="jingjifa"].active { background: var(--jingjifa); border-color: var(--jingjifa); }
     .tab-btn[data-sub="caiguan"].active { background: var(--caiguan); border-color: var(--caiguan); }
@@ -200,28 +174,110 @@
       font-weight: 600;
     }
 
-    /* Main List */
+    /* Chapter Accordion Container */
     .container {
       max-width: 960px;
       margin: 16px auto 0;
       padding: 0 16px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
-    .card {
+    .chapter-group {
       background: var(--card);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .chapter-header {
+      width: 100%;
+      background: #fff;
+      border: none;
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+    }
+    .chapter-header:hover { background: #f8fafc; }
+    .chapter-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .chapter-title-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .chapter-name {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .chapter-meta {
+      font-size: 12.5px;
+      color: var(--muted);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .chapter-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    .chapter-progress {
+      font-size: 13px;
+      color: #475569;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .chapter-arrow {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #475569;
+      transition: transform 0.2s ease;
+    }
+    .chapter-group.open .chapter-arrow {
+      transform: rotate(180deg);
+      background: #e0e7ff;
+      color: #1d4ed8;
+    }
+
+    .chapter-body {
+      display: none;
+      border-top: 1px solid var(--border);
+      background: #f8fafc;
+      padding: 14px;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .chapter-group.open .chapter-body { display: flex; }
+
+    /* Point Card inside Chapter */
+    .card {
+      background: var(--card);
+      border-radius: 12px;
       border: 1px solid var(--border);
       overflow: hidden;
-      transition: opacity 0.2s;
     }
-    .card.mastered {
-      border-color: #a7f3d0;
-    }
+    .card.mastered { border-color: var(--ok-border); }
     .card-head {
-      padding: 16px 18px 12px;
+      padding: 14px 16px 11px;
       border-bottom: 1px dashed var(--border);
     }
     .badges {
@@ -229,7 +285,7 @@
       gap: 6px;
       flex-wrap: wrap;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
     .badge {
       font-size: 11px;
@@ -241,7 +297,7 @@
     .badge-jingjifa { background: var(--jingjifa-bg); color: var(--jingjifa); }
     .badge-caiguan { background: var(--caiguan-bg); color: var(--caiguan); }
     .badge-chap { background: #f1f5f9; color: #475569; }
-    .badge-hot { background: var(--danger-bg); color: var(--danger); }
+    .badge-hot { background: var(--err-bg); color: var(--err); }
     .badge-done { background: #dcfce7; color: #15803d; }
 
     .card-title-row {
@@ -252,7 +308,7 @@
     }
     .card-title {
       margin: 0;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       line-height: 1.4;
       color: #0f172a;
@@ -275,16 +331,16 @@
     }
 
     .card-body {
-      padding: 14px 18px 18px;
+      padding: 13px 16px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 11px;
     }
     .plain-box {
       background: #f8fafc;
       border-left: 4px solid #3b82f6;
-      border-radius: 0 12px 12px 0;
-      padding: 12px 14px;
+      border-radius: 0 10px 10px 0;
+      padding: 11px 13px;
       font-size: 14.5px;
       white-space: pre-line;
       color: #1e293b;
@@ -295,33 +351,28 @@
       font-size: 12px;
       font-weight: 700;
       color: #475569;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       display: block;
     }
-
     .kp-list {
       margin: 0;
       padding-left: 18px;
       font-size: 14px;
       color: #334155;
     }
-    .kp-list li { margin-bottom: 5px; }
-
+    .kp-list li { margin-bottom: 4px; }
     .tip-box {
       background: #fffbeb;
       border: 1px solid #fde68a;
       color: #92400e;
       border-radius: 10px;
-      padding: 9px 12px;
+      padding: 8px 12px;
       font-size: 13.5px;
       font-weight: 600;
     }
 
-    /* Questions Accordion */
-    .q-section {
-      border-top: 1px solid var(--border);
-      padding-top: 10px;
-    }
+    /* Interactive Question Cards */
+    .q-section { border-top: 1px solid var(--border); padding-top: 10px; }
     .q-toggle {
       width: 100%;
       background: #f1f5f9;
@@ -340,68 +391,175 @@
       display: none;
       margin-top: 10px;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
     .q-list.open { display: flex; }
+
     .q-item {
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 12px;
+      padding: 14px;
       background: #fff;
-      font-size: 13.5px;
+      font-size: 14px;
     }
     .q-meta {
       display: flex;
-      gap: 6px;
+      gap: 7px;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-size: 12px;
       color: var(--muted);
+      flex-wrap: wrap;
     }
     .q-type {
       background: #e2e8f0;
       color: #334155;
-      padding: 1px 7px;
+      padding: 1px 8px;
       border-radius: 6px;
       font-weight: 600;
     }
-    .q-wrong-tag {
-      color: var(--danger);
-      font-weight: 600;
-    }
+    .q-type.multi { background: #ede9fe; color: #6d28d9; }
+    .q-wrong-tag { color: var(--err); font-weight: 600; }
     .q-stem {
       font-weight: 500;
       color: #0f172a;
-      margin-bottom: 8px;
+      margin-bottom: 11px;
+      line-height: 1.65;
     }
+
+    /* Clickable Options (like zlketang screenshot) */
     .q-opts {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      margin-bottom: 10px;
-      color: #334155;
+      gap: 8px;
+      margin-bottom: 12px;
     }
-    .ans-btn {
-      background: #eff6ff;
+    .opt-row {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 13px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      background: #fff;
+      color: #1e293b;
+      font-size: 14px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.14s ease;
+      line-height: 1.5;
+    }
+    .opt-row:hover:not(.locked) {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+    .opt-row.selected {
+      border-color: var(--sel);
+      background: var(--sel-bg);
       color: #1d4ed8;
-      border: 1px solid #bfdbfe;
+      font-weight: 500;
+    }
+    .opt-row.correct {
+      border-color: var(--ok-border);
+      background: var(--ok-bg);
+      color: var(--ok);
+      font-weight: 600;
+    }
+    .opt-row.wrong {
+      border-color: var(--err-border);
+      background: var(--err-bg);
+      color: var(--err);
+      font-weight: 600;
+    }
+    .opt-row.locked { cursor: default; }
+
+    .opt-icon {
+      flex: 0 0 20px;
+      height: 20px;
+      margin-top: 1px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      background: #fff;
+      color: transparent;
+    }
+    .opt-icon.radio { border-radius: 50%; }
+    .opt-row.selected .opt-icon {
+      border-color: var(--sel);
+      background: var(--sel);
+      color: #fff;
+    }
+    .opt-row.correct .opt-icon {
+      border-color: var(--ok);
+      background: #fff;
+      color: var(--ok);
+    }
+    .opt-row.wrong .opt-icon {
+      border-color: var(--err);
+      background: #fff;
+      color: var(--err);
+    }
+
+    .q-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn-submit {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-submit:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+    }
+    .btn-ghost {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #e2e8f0;
       border-radius: 8px;
       padding: 5px 12px;
       font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
     }
-    .ans-box {
+
+    .ans-panel {
       display: none;
-      margin-top: 8px;
-      padding: 9px 11px;
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 8px;
-      font-size: 13px;
-      color: #166534;
+      margin-top: 11px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 13.5px;
     }
-    .ans-box.show { display: block; }
+    .ans-panel.show { display: block; }
+    .ans-summary {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #e2e8f0;
+      font-weight: 600;
+    }
+    .ans-right { color: var(--ok); }
+    .ans-user-ok { color: var(--ok); }
+    .ans-user-err { color: var(--err); }
+    .ans-explain-title { font-weight: 700; color: #334155; margin-bottom: 4px; }
+    .ans-explain-body { color: #334155; line-height: 1.65; }
 
     .empty {
       text-align: center;
@@ -448,8 +606,10 @@
 
     @media (max-width: 600px) {
       .hero h1 { font-size: 19px; }
-      .card-title { font-size: 16px; }
-      .stat-num { font-size: 18px; }
+      .chapter-header { padding: 14px; }
+      .chapter-name { font-size: 15.5px; }
+      .chapter-body { padding: 10px; }
+      .card-title { font-size: 15px; }
     }
   </style>
 </head>
@@ -459,7 +619,7 @@
       <div class="hero-top">
         <div>
           <h1>📚 中级会计三科 · 错题大白话复习本</h1>
-          <p class="hero-sub">同步自之了课堂错题本 · 最近更新：2026-11-26</p>
+          <p class="hero-sub">按章节收起展开 · 支持点击选项自测判分 · 更新：2026-11-26</p>
         </div>
         <div class="hero-actions">
           <a class="btn-glass" href="https://www.zlketang.com/exercises/6.html" target="_blank" rel="noopener">📝 去之了课堂刷题</a>
@@ -473,7 +633,7 @@
         </div>
         <div class="stat-box">
           <div class="stat-num" id="statQuestions">0</div>
-          <div class="stat-label">覆盖原错题（道）</div>
+          <div class="stat-label">可作答原错题</div>
         </div>
         <div class="stat-box">
           <div class="stat-num" id="statMastered">0%</div>
@@ -493,15 +653,16 @@
         <button class="tab-btn" data-sub="caiguan">中级财务管理 (43题)</button>
       </div>
       <div class="toolbar">
-        <input type="search" id="searchInput" class="search-input" placeholder="🔍 搜考点、大白话关键词、题干..." />
+        <input type="search" id="searchInput" class="search-input" placeholder="🔍 搜章节、考点、大白话、题干..." />
         <button class="pill" id="filterHot">🔥 高频易错</button>
         <button class="pill" id="filterUnmastered">📌 仅看待复习</button>
         <button class="pill" id="toggleCompact">⚡ 速背模式</button>
+        <button class="pill" id="toggleAllChapters">📂 全部展开</button>
       </div>
     </div>
   </nav>
 
-  <main class="container" id="cardList"></main>
+  <main class="container" id="chapterList"></main>
 
   <div class="modal-mask" id="syncModal">
     <div class="modal">
@@ -522,15 +683,46 @@
   <script>
     const SUBJECTS = [window.SUBJECT_SHIWU, window.SUBJECT_JINGJIFA, window.SUBJECT_CAIGUAN].filter(Boolean);
     const ALL_POINTS = SUBJECTS.flatMap(sub =>
-      sub.points.map(p => ({ ...p, subjectId: sub.id, subjectName: sub.name, subjectShort: sub.shortName }))
+      sub.points.map(p => {
+        const chapMain = p.chapter.split("·")[0].trim();
+        const chapSec = p.chapter.includes("·") ? p.chapter.split("·")[1].trim() : "";
+        return {
+          ...p,
+          chapMain,
+          chapSec,
+          chapKey: `${sub.id}::${chapMain}`,
+          subjectId: sub.id,
+          subjectName: sub.name,
+          subjectShort: sub.shortName
+        };
+      })
     );
 
     const STORAGE_KEY = "zhongji_mastered_v1";
     let masteredSet = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+    let openChapters = new Set(); // 默认按章节收起，页面清爽
+    let openQLists = new Set();   // 记忆已展开的错题区
+    let quizState = {};           // qid -> { selected: Set, submitted: bool }
+
     let state = { subject: "all", query: "", onlyHot: false, onlyUnmastered: false, compact: false };
 
     function saveMastered() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify([...masteredSet]));
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+    }
+
+    function getOptionLetter(optText, idx) {
+      const m = String(optText).trim().match(/^([A-F])\s*[.、．]/i);
+      return m ? m[1].toUpperCase() : String.fromCharCode(65 + idx);
+    }
+
+    function parseCorrectLetters(ans) {
+      return new Set(
+        String(ans).toUpperCase().replace(/[^A-F]/g, "").split("").filter(Boolean)
+      );
     }
 
     function updateStats() {
@@ -544,14 +736,78 @@
       document.getElementById("progressFill").style.width = `${pct}%`;
     }
 
-    function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+    function renderQuestionHtml(pId, item, idx) {
+      const qid = `${pId}-q${idx}`;
+      const isMulti = item.type.includes("多选");
+      const qs = quizState[qid] || { selected: new Set(), submitted: false };
+      const correctSet = parseCorrectLetters(item.answer);
+      const userArr = [...qs.selected].sort();
+      const correctArr = [...correctSet].sort();
+      const isExactRight = qs.submitted && userArr.length === correctArr.length && userArr.every((v, i) => v === correctArr[i]);
+
+      const optsHtml = item.options.map((opt, oi) => {
+        const letter = getOptionLetter(opt, oi);
+        const isSel = qs.selected.has(letter);
+        const isRight = correctSet.has(letter);
+        let cls = "opt-row";
+        let iconChar = "";
+        if (qs.submitted) {
+          cls += " locked";
+          if (isRight) {
+            cls += " correct";
+            iconChar = "✓";
+          } else if (isSel && !isRight) {
+            cls += " wrong";
+            iconChar = "✕";
+          }
+        } else if (isSel) {
+          cls += " selected";
+          iconChar = "✓";
+        }
+        return `
+          <button type="button" class="${cls}" data-qid="${qid}" data-letter="${letter}" data-multi="${isMulti ? 1 : 0}">
+            <span class="opt-icon ${isMulti ? "" : "radio"}">${iconChar}</span>
+            <span>${escapeHtml(opt)}</span>
+          </button>
+        `;
+      }).join("");
+
+      const actionButtons = qs.submitted
+        ? `<button type="button" class="btn-ghost" data-reset="${qid}">🔄 重新作答</button>`
+        : `
+          ${isMulti ? `<button type="button" class="btn-submit" data-submit="${qid}" ${qs.selected.size === 0 ? "disabled" : ""}>确认提交（已选 ${qs.selected.size} 项）</button>` : `<span style="font-size:12px;color:#64748b;">点击上方选项即可自动判分</span>`}
+          <button type="button" class="btn-ghost" data-reveal="${qid}">👁 直接看解析</button>
+        `;
+
+      const userAnsText = userArr.length ? userArr.join(",") : "未作答";
+      const userAnsClass = isExactRight ? "ans-user-ok" : "ans-user-err";
+
+      return `
+        <div class="q-item" id="wrap-${qid}">
+          <div class="q-meta">
+            <span class="q-type ${isMulti ? "multi" : ""}">${escapeHtml(item.type)}</span>
+            <span>第 ${idx + 1} 题</span>
+            ${item.wrongTimes >= 2 ? `<span class="q-wrong-tag">🔥 错过 ${item.wrongTimes} 次</span>` : `<span>错过 ${item.wrongTimes} 次</span>`}
+            ${qs.submitted ? (isExactRight ? `<span style="color:#16a34a;font-weight:700;">✓ 答对了！</span>` : `<span style="color:#dc2626;font-weight:700;">✕ 再巩固一下</span>`) : ""}
+          </div>
+          <div class="q-stem">${escapeHtml(item.stem)}</div>
+          <div class="q-opts">${optsHtml}</div>
+          <div class="q-actions">${actionButtons}</div>
+          <div class="ans-panel ${qs.submitted ? "show" : ""}">
+            <div class="ans-summary">
+              <span>正确答案：<span class="ans-right">${escapeHtml(item.answer)}</span></span>
+              <span>你的答案：<span class="${userAnsClass}">${escapeHtml(userAnsText)}</span></span>
+            </div>
+            <div class="ans-explain-title">答案解析</div>
+            <div class="ans-explain-body">${escapeHtml(item.explain)}</div>
+          </div>
+        </div>
+      `;
     }
 
-    function render() {
-      updateStats();
+    function getFilteredPoints() {
       const q = state.query.trim().toLowerCase();
-      const list = ALL_POINTS.filter(p => {
+      return ALL_POINTS.filter(p => {
         if (state.subject !== "all" && p.subjectId !== state.subject) return false;
         if (state.onlyHot && !p.highFreq) return false;
         if (state.onlyUnmastered && masteredSet.has(p.id)) return false;
@@ -565,85 +821,216 @@
         }
         return true;
       });
+    }
 
-      const container = document.getElementById("cardList");
-      if (!list.length) {
+    function render() {
+      updateStats();
+      const filtered = getFilteredPoints();
+      const container = document.getElementById("chapterList");
+
+      if (!filtered.length) {
         container.innerHTML = `<div class="empty">🎉 没有匹配条件的考点，换个筛选条件试试！</div>`;
         return;
       }
 
-      container.innerHTML = list.map(p => {
-        const isDone = masteredSet.has(p.id);
-        const subClass = `badge-${p.subjectId}`;
-        const qsHtml = p.questions.map((item, idx) => `
-          <div class="q-item">
-            <div class="q-meta">
-              <span class="q-type">${escapeHtml(item.type)}</span>
-              <span>原错题 ${idx + 1}</span>
-              ${item.wrongTimes >= 2 ? `<span class="q-wrong-tag">🔥 错过 ${item.wrongTimes} 次</span>` : `<span>错过 ${item.wrongTimes} 次</span>`}
-            </div>
-            <div class="q-stem">${escapeHtml(item.stem)}</div>
-            <div class="q-opts">${item.options.map(o => `<div>${escapeHtml(o)}</div>`).join("")}</div>
-            <button class="ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">👁 查看答案与解析</button>
-            <div class="ans-box">
-              <div><b>正确答案：</b>${escapeHtml(item.answer)}</div>
-              <div style="margin-top:4px;"><b>解析：</b>${escapeHtml(item.explain)}</div>
-            </div>
-          </div>
-        `).join("");
+      // Group by chapter (subject + chapter main title)
+      const groupsMap = new Map();
+      for (const p of filtered) {
+        if (!groupsMap.has(p.chapKey)) {
+          groupsMap.set(p.chapKey, {
+            chapKey: p.chapKey,
+            chapMain: p.chapMain,
+            subjectId: p.subjectId,
+            subjectShort: p.subjectShort,
+            subjectName: p.subjectName,
+            points: []
+          });
+        }
+        groupsMap.get(p.chapKey).points.push(p);
+      }
+
+      const groups = [...groupsMap.values()];
+      const autoExpand = Boolean(state.query.trim());
+
+      // Sync toggleAll button label
+      const allOpen = groups.every(g => openChapters.has(g.chapKey));
+      document.getElementById("toggleAllChapters").textContent = allOpen ? "📁 全部收起" : "📂 全部展开";
+
+      container.innerHTML = groups.map(g => {
+        const isOpen = autoExpand || openChapters.has(g.chapKey);
+        const qTotal = g.points.reduce((s, p) => s + p.questions.length, 0);
+        const masteredInChap = g.points.filter(p => masteredSet.has(p.id)).length;
+        const hotCount = g.points.filter(p => p.highFreq).length;
+
+        const cardsHtml = g.points.map(p => {
+          const isDone = masteredSet.has(p.id);
+          const qOpen = openQLists.has(p.id);
+          const qsHtml = p.questions.map((item, idx) => renderQuestionHtml(p.id, item, idx)).join("");
+
+          return `
+            <article class="card ${isDone ? "mastered" : ""}">
+              <div class="card-head">
+                <div class="badges">
+                  ${p.chapSec ? `<span class="badge badge-chap">${escapeHtml(p.chapSec)}</span>` : ""}
+                  ${p.highFreq ? `<span class="badge badge-hot">🔥 高频易错</span>` : ""}
+                  ${isDone ? `<span class="badge badge-done">✅ 已掌握</span>` : ""}
+                </div>
+                <div class="card-title-row">
+                  <h2 class="card-title">${escapeHtml(p.title)}</h2>
+                  <button type="button" class="master-btn ${isDone ? "done" : ""}" data-master="${p.id}">
+                    ${isDone ? "已掌握 ✓" : "标记掌握"}
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="plain-box ${p.subjectId}">
+                  <span class="box-label">💬 大白话秒懂</span>${escapeHtml(p.plain)}
+                </div>
+                ${state.compact ? "" : `
+                  <div>
+                    <span class="box-label">📝 核心必背要点</span>
+                    <ul class="kp-list">${p.keyPoints.map(k => `<li>${escapeHtml(k)}</li>`).join("")}</ul>
+                  </div>
+                `}
+                <div class="tip-box">⚠️ 考场避坑口诀：${escapeHtml(p.tip)}</div>
+                ${state.compact ? "" : `
+                  <div class="q-section">
+                    <button type="button" class="q-toggle" data-qtoggle="${p.id}">
+                      <span>✍️ 关联原错题自测（共 ${p.questions.length} 道，可点选项判分）</span>
+                      <span>${qOpen ? "收起 ▲" : "开始自测 ▼"}</span>
+                    </button>
+                    <div class="q-list ${qOpen ? "open" : ""}">${qsHtml}</div>
+                  </div>
+                `}
+              </div>
+            </article>
+          `;
+        }).join("");
 
         return `
-          <article class="card ${isDone ? "mastered" : ""}">
-            <div class="card-head">
-              <div class="badges">
-                <span class="badge ${subClass}">${escapeHtml(p.subjectShort)}</span>
-                <span class="badge badge-chap">${escapeHtml(p.chapter)}</span>
-                ${p.highFreq ? `<span class="badge badge-hot">🔥 高频易错</span>` : ""}
-                ${isDone ? `<span class="badge badge-done">✅ 已掌握</span>` : ""}
-              </div>
-              <div class="card-title-row">
-                <h2 class="card-title">${escapeHtml(p.title)}</h2>
-                <button class="master-btn ${isDone ? "done" : ""}" data-id="${p.id}">
-                  ${isDone ? "已掌握 ✓" : "标记掌握"}
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="plain-box ${p.subjectId}">
-                <span class="box-label">💬 大白话秒懂</span>${escapeHtml(p.plain)}
-              </div>
-              ${state.compact ? "" : `
-                <div>
-                  <span class="box-label">📝 核心必背要点</span>
-                  <ul class="kp-list">${p.keyPoints.map(k => `<li>${escapeHtml(k)}</li>`).join("")}</ul>
+          <section class="chapter-group ${isOpen ? "open" : ""}" data-chap="${escapeHtml(g.chapKey)}">
+            <button type="button" class="chapter-header" data-chap-toggle="${escapeHtml(g.chapKey)}">
+              <div class="chapter-left">
+                <div class="chapter-title-line">
+                  <span class="badge badge-${g.subjectId}">${escapeHtml(g.subjectShort)}</span>
+                  <span class="chapter-name">${escapeHtml(g.chapMain)}</span>
+                  ${hotCount ? `<span class="badge badge-hot">🔥 ${hotCount}个高频点</span>` : ""}
                 </div>
-              `}
-              <div class="tip-box">⚠️ 考场避坑口诀：${escapeHtml(p.tip)}</div>
-              ${state.compact ? "" : `
-                <div class="q-section">
-                  <button class="q-toggle" onclick="const el=this.nextElementSibling; el.classList.toggle('open'); this.querySelector('span:last-child').textContent=el.classList.contains('open')?'收起 ▲':'展开自测 ▼'">
-                    <span>📖 关联原错题（共 ${p.questions.length} 道，点击自测）</span>
-                    <span>展开自测 ▼</span>
-                  </button>
-                  <div class="q-list">${qsHtml}</div>
+                <div class="chapter-meta">
+                  <span>共 ${g.points.length} 个大白话考点</span>
+                  <span>覆盖 ${qTotal} 道错题</span>
                 </div>
-              `}
-            </div>
-          </article>
+              </div>
+              <div class="chapter-right">
+                <span class="chapter-progress">已掌握 ${masteredInChap}/${g.points.length}</span>
+                <span class="chapter-arrow">⌄</span>
+              </div>
+            </button>
+            <div class="chapter-body">${cardsHtml}</div>
+          </section>
         `;
       }).join("");
-
-      container.querySelectorAll(".master-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const id = btn.dataset.id;
-          if (masteredSet.has(id)) masteredSet.delete(id);
-          else masteredSet.add(id);
-          saveMastered();
-          render();
-        });
-      });
     }
 
+    // Event delegation on chapterList
+    document.getElementById("chapterList").addEventListener("click", e => {
+      // 1. Toggle chapter accordion
+      const chapBtn = e.target.closest("[data-chap-toggle]");
+      if (chapBtn) {
+        const key = chapBtn.dataset.chapToggle;
+        if (openChapters.has(key)) openChapters.delete(key);
+        else openChapters.add(key);
+        render();
+        return;
+      }
+
+      // 2. Toggle mastered
+      const masterBtn = e.target.closest("[data-master]");
+      if (masterBtn) {
+        const id = masterBtn.dataset.master;
+        if (masteredSet.has(id)) masteredSet.delete(id);
+        else masteredSet.add(id);
+        saveMastered();
+        render();
+        return;
+      }
+
+      // 3. Toggle question list
+      const qToggle = e.target.closest("[data-qtoggle]");
+      if (qToggle) {
+        const id = qToggle.dataset.qtoggle;
+        if (openQLists.has(id)) openQLists.delete(id);
+        else openQLists.add(id);
+        render();
+        return;
+      }
+
+      // 4. Click option
+      const optBtn = e.target.closest(".opt-row");
+      if (optBtn) {
+        const qid = optBtn.dataset.qid;
+        const letter = optBtn.dataset.letter;
+        const isMulti = optBtn.dataset.multi === "1";
+        if (!quizState[qid]) quizState[qid] = { selected: new Set(), submitted: false };
+        const qs = quizState[qid];
+        if (qs.submitted) return;
+
+        if (isMulti) {
+          if (qs.selected.has(letter)) qs.selected.delete(letter);
+          else qs.selected.add(letter);
+        } else {
+          qs.selected = new Set([letter]);
+          qs.submitted = true; // 单选/判断点击即自动判分
+        }
+        rerenderSingleQuestion(qid);
+        return;
+      }
+
+      // 5. Submit multi-choice
+      const submitBtn = e.target.closest("[data-submit]");
+      if (submitBtn) {
+        const qid = submitBtn.dataset.submit;
+        if (quizState[qid] && quizState[qid].selected.size > 0) {
+          quizState[qid].submitted = true;
+          rerenderSingleQuestion(qid);
+        }
+        return;
+      }
+
+      // 6. Direct reveal answer
+      const revealBtn = e.target.closest("[data-reveal]");
+      if (revealBtn) {
+        const qid = revealBtn.dataset.reveal;
+        if (!quizState[qid]) quizState[qid] = { selected: new Set(), submitted: false };
+        quizState[qid].submitted = true;
+        rerenderSingleQuestion(qid);
+        return;
+      }
+
+      // 7. Reset question
+      const resetBtn = e.target.closest("[data-reset]");
+      if (resetBtn) {
+        const qid = resetBtn.dataset.reset;
+        quizState[qid] = { selected: new Set(), submitted: false };
+        rerenderSingleQuestion(qid);
+        return;
+      }
+    });
+
+    function rerenderSingleQuestion(qid) {
+      const m = qid.match(/^(.+)-q(\d+)$/);
+      if (!m) return render();
+      const pId = m[1];
+      const idx = Number(m[2]);
+      const p = ALL_POINTS.find(x => x.id === pId);
+      const wrap = document.getElementById(`wrap-${qid}`);
+      if (!p || !wrap) return render();
+      const tmp = document.createElement("div");
+      tmp.innerHTML = renderQuestionHtml(pId, p.questions[idx], idx).trim();
+      wrap.replaceWith(tmp.firstElementChild);
+    }
+
+    // Top controls
     document.getElementById("subjectTabs").addEventListener("click", e => {
       const btn = e.target.closest(".tab-btn");
       if (!btn) return;
@@ -669,6 +1056,14 @@
     document.getElementById("toggleCompact").addEventListener("click", e => {
       state.compact = !state.compact;
       e.target.classList.toggle("active", state.compact);
+      render();
+    });
+    document.getElementById("toggleAllChapters").addEventListener("click", () => {
+      const filtered = getFilteredPoints();
+      const keys = [...new Set(filtered.map(p => p.chapKey))];
+      const allOpen = keys.every(k => openChapters.has(k));
+      if (allOpen) keys.forEach(k => openChapters.delete(k));
+      else keys.forEach(k => openChapters.add(k));
       render();
     });
     document.getElementById("openSyncModal").addEventListener("click", () => {
