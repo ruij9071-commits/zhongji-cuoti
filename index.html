@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>中级会计三科 · 错题大白话复习本</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --shiwu: #2563eb;
+      --shiwu-bg: #eff6ff;
+      --jingjifa: #d97706;
+      --jingjifa-bg: #fffbeb;
+      --caiguan: #059669;
+      --caiguan-bg: #ecfdf5;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --radius: 16px;
+      --shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding-bottom: 64px;
+    }
+
+    /* Header */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #0ea5e9 100%);
+      color: #fff;
+      padding: 20px 16px 24px;
+    }
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .hero-sub {
+      margin: 6px 0 0;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-glass {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.28);
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.15s;
+    }
+    .btn-glass:hover { background: rgba(255,255,255,0.28); }
+
+    /* Stats */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 10px 12px;
+      backdrop-filter: blur(6px);
+    }
+    .stat-num {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .stat-label {
+      font-size: 12px;
+      opacity: 0.88;
+      margin-top: 2px;
+    }
+    .progress-wrap {
+      margin-top: 12px;
+      background: rgba(255,255,255,0.2);
+      height: 7px;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #34d399;
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+
+    /* Sticky Controls */
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(246, 247, 251, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+    }
+    .controls-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tab-btn.active {
+      background: #1e293b;
+      color: #fff;
+      border-color: #1e293b;
+    }
+    .tab-btn[data-sub="shiwu"].active { background: var(--shiwu); border-color: var(--shiwu); }
+    .tab-btn[data-sub="jingjifa"].active { background: var(--jingjifa); border-color: var(--jingjifa); }
+    .tab-btn[data-sub="caiguan"].active { background: var(--caiguan); border-color: var(--caiguan); }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-input {
+      flex: 1 1 180px;
+      min-width: 140px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      background: #fff;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--shiwu); }
+    .pill {
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .pill.active {
+      background: #eef2ff;
+      color: #3730a3;
+      border-color: #c7d2fe;
+      font-weight: 600;
+    }
+
+    /* Main List */
+    .container {
+      max-width: 960px;
+      margin: 16px auto 0;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: opacity 0.2s;
+    }
+    .card.mastered {
+      border-color: #a7f3d0;
+    }
+    .card-head {
+      padding: 16px 18px 12px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 999px;
+    }
+    .badge-shiwu { background: var(--shiwu-bg); color: var(--shiwu); }
+    .badge-jingjifa { background: var(--jingjifa-bg); color: var(--jingjifa); }
+    .badge-caiguan { background: var(--caiguan-bg); color: var(--caiguan); }
+    .badge-chap { background: #f1f5f9; color: #475569; }
+    .badge-hot { background: var(--danger-bg); color: var(--danger); }
+    .badge-done { background: #dcfce7; color: #15803d; }
+
+    .card-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .card-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #0f172a;
+    }
+    .master-btn {
+      flex: 0 0 auto;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .master-btn.done {
+      background: #10b981;
+      color: #fff;
+      border-color: #10b981;
+    }
+
+    .card-body {
+      padding: 14px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .plain-box {
+      background: #f8fafc;
+      border-left: 4px solid #3b82f6;
+      border-radius: 0 12px 12px 0;
+      padding: 12px 14px;
+      font-size: 14.5px;
+      white-space: pre-line;
+      color: #1e293b;
+    }
+    .plain-box.jingjifa { border-left-color: var(--jingjifa); }
+    .plain-box.caiguan { border-left-color: var(--caiguan); }
+    .box-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .kp-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 14px;
+      color: #334155;
+    }
+    .kp-list li { margin-bottom: 5px; }
+
+    .tip-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    /* Questions Accordion */
+    .q-section {
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+    .q-toggle {
+      width: 100%;
+      background: #f1f5f9;
+      border: none;
+      border-radius: 10px;
+      padding: 9px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+    }
+    .q-list {
+      display: none;
+      margin-top: 10px;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .q-list.open { display: flex; }
+    .q-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+      font-size: 13.5px;
+    }
+    .q-meta {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .q-type {
+      background: #e2e8f0;
+      color: #334155;
+      padding: 1px 7px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .q-wrong-tag {
+      color: var(--danger);
+      font-weight: 600;
+    }
+    .q-stem {
+      font-weight: 500;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .q-opts {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+      color: #334155;
+    }
+    .ans-btn {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ans-box {
+      display: none;
+      margin-top: 8px;
+      padding: 9px 11px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #166534;
+    }
+    .ans-box.show { display: block; }
+
+    .empty {
+      text-align: center;
+      padding: 48px 16px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* Modal */
+    .modal-mask {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-mask.show { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 18px;
+      max-width: 460px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+    }
+    .modal h3 { margin: 0 0 10px; font-size: 18px; }
+    .modal p, .modal li { font-size: 14px; color: #334155; }
+    .modal ol { padding-left: 20px; }
+    .modal-close {
+      margin-top: 14px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #1e293b;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 19px; }
+      .card-title { font-size: 16px; }
+      .stat-num { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div>
+          <h1>📚 中级会计三科 · 错题大白话复习本</h1>
+          <p class="hero-sub">同步自之了课堂错题本 · 最近更新：2026-11-26</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn-glass" href="https://www.zlketang.com/exercises/6.html" target="_blank" rel="noopener">📝 去之了课堂刷题</a>
+          <button class="btn-glass" id="openSyncModal">🔄 同步新错题</button>
+        </div>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-box">
+          <div class="stat-num" id="statPoints">0</div>
+          <div class="stat-label">核心大白话考点</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="statQuestions">0</div>
+          <div class="stat-label">覆盖原错题（道）</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="statMastered">0%</div>
+          <div class="stat-label">已掌握进度</div>
+        </div>
+      </div>
+      <div class="progress-wrap"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </header>
+
+  <nav class="controls">
+    <div class="controls-inner">
+      <div class="tabs" id="subjectTabs">
+        <button class="tab-btn active" data-sub="all">全部三科 (90题)</button>
+        <button class="tab-btn" data-sub="shiwu">中级会计实务 (37题)</button>
+        <button class="tab-btn" data-sub="jingjifa">中级经济法 (10题)</button>
+        <button class="tab-btn" data-sub="caiguan">中级财务管理 (43题)</button>
+      </div>
+      <div class="toolbar">
+        <input type="search" id="searchInput" class="search-input" placeholder="🔍 搜考点、大白话关键词、题干..." />
+        <button class="pill" id="filterHot">🔥 高频易错</button>
+        <button class="pill" id="filterUnmastered">📌 仅看待复习</button>
+        <button class="pill" id="toggleCompact">⚡ 速背模式</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" id="cardList"></main>
+
+  <div class="modal-mask" id="syncModal">
+    <div class="modal">
+      <h3>🔄 如何同步新的错题？</h3>
+      <p>每次你在之了课堂刷完新题，按下面 3 步就能把新错题自动整理进这个链接：</p>
+      <ol>
+        <li>点击右上角「去之了课堂刷题」，正常做题练习；</li>
+        <li>回到电脑上的 AI 助手，发一句：<b>“帮我更新一下之了课堂的错题本”</b>；</li>
+        <li>AI 会自动拉取你新增的错题、写成大白话并更新到<b>同一个链接</b>，手机和电脑刷新即可看到最新内容！</li>
+      </ol>
+      <button class="modal-close" id="closeSyncModal">我知道了</button>
+    </div>
+  </div>
+
+  <script src="./data/shiwu.js"></script>
+  <script src="./data/jingjifa.js"></script>
+  <script src="./data/caiguan.js"></script>
+  <script>
+    const SUBJECTS = [window.SUBJECT_SHIWU, window.SUBJECT_JINGJIFA, window.SUBJECT_CAIGUAN].filter(Boolean);
+    const ALL_POINTS = SUBJECTS.flatMap(sub =>
+      sub.points.map(p => ({ ...p, subjectId: sub.id, subjectName: sub.name, subjectShort: sub.shortName }))
+    );
+
+    const STORAGE_KEY = "zhongji_mastered_v1";
+    let masteredSet = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+    let state = { subject: "all", query: "", onlyHot: false, onlyUnmastered: false, compact: false };
+
+    function saveMastered() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...masteredSet]));
+    }
+
+    function updateStats() {
+      const totalPts = ALL_POINTS.length;
+      const totalQs = ALL_POINTS.reduce((s, p) => s + p.questions.length, 0);
+      const doneCount = ALL_POINTS.filter(p => masteredSet.has(p.id)).length;
+      const pct = totalPts ? Math.round((doneCount / totalPts) * 100) : 0;
+      document.getElementById("statPoints").textContent = totalPts;
+      document.getElementById("statQuestions").textContent = totalQs;
+      document.getElementById("statMastered").textContent = `${doneCount}/${totalPts} (${pct}%)`;
+      document.getElementById("progressFill").style.width = `${pct}%`;
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+    }
+
+    function render() {
+      updateStats();
+      const q = state.query.trim().toLowerCase();
+      const list = ALL_POINTS.filter(p => {
+        if (state.subject !== "all" && p.subjectId !== state.subject) return false;
+        if (state.onlyHot && !p.highFreq) return false;
+        if (state.onlyUnmastered && masteredSet.has(p.id)) return false;
+        if (q) {
+          const hay = [
+            p.title, p.chapter, p.plain, p.tip,
+            ...(p.keyPoints || []),
+            ...p.questions.map(x => x.stem + " " + x.explain)
+          ].join(" ").toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      const container = document.getElementById("cardList");
+      if (!list.length) {
+        container.innerHTML = `<div class="empty">🎉 没有匹配条件的考点，换个筛选条件试试！</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(p => {
+        const isDone = masteredSet.has(p.id);
+        const subClass = `badge-${p.subjectId}`;
+        const qsHtml = p.questions.map((item, idx) => `
+          <div class="q-item">
+            <div class="q-meta">
+              <span class="q-type">${escapeHtml(item.type)}</span>
+              <span>原错题 ${idx + 1}</span>
+              ${item.wrongTimes >= 2 ? `<span class="q-wrong-tag">🔥 错过 ${item.wrongTimes} 次</span>` : `<span>错过 ${item.wrongTimes} 次</span>`}
+            </div>
+            <div class="q-stem">${escapeHtml(item.stem)}</div>
+            <div class="q-opts">${item.options.map(o => `<div>${escapeHtml(o)}</div>`).join("")}</div>
+            <button class="ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">👁 查看答案与解析</button>
+            <div class="ans-box">
+              <div><b>正确答案：</b>${escapeHtml(item.answer)}</div>
+              <div style="margin-top:4px;"><b>解析：</b>${escapeHtml(item.explain)}</div>
+            </div>
+          </div>
+        `).join("");
+
+        return `
+          <article class="card ${isDone ? "mastered" : ""}">
+            <div class="card-head">
+              <div class="badges">
+                <span class="badge ${subClass}">${escapeHtml(p.subjectShort)}</span>
+                <span class="badge badge-chap">${escapeHtml(p.chapter)}</span>
+                ${p.highFreq ? `<span class="badge badge-hot">🔥 高频易错</span>` : ""}
+                ${isDone ? `<span class="badge badge-done">✅ 已掌握</span>` : ""}
+              </div>
+              <div class="card-title-row">
+                <h2 class="card-title">${escapeHtml(p.title)}</h2>
+                <button class="master-btn ${isDone ? "done" : ""}" data-id="${p.id}">
+                  ${isDone ? "已掌握 ✓" : "标记掌握"}
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="plain-box ${p.subjectId}">
+                <span class="box-label">💬 大白话秒懂</span>${escapeHtml(p.plain)}
+              </div>
+              ${state.compact ? "" : `
+                <div>
+                  <span class="box-label">📝 核心必背要点</span>
+                  <ul class="kp-list">${p.keyPoints.map(k => `<li>${escapeHtml(k)}</li>`).join("")}</ul>
+                </div>
+              `}
+              <div class="tip-box">⚠️ 考场避坑口诀：${escapeHtml(p.tip)}</div>
+              ${state.compact ? "" : `
+                <div class="q-section">
+                  <button class="q-toggle" onclick="const el=this.nextElementSibling; el.classList.toggle('open'); this.querySelector('span:last-child').textContent=el.classList.contains('open')?'收起 ▲':'展开自测 ▼'">
+                    <span>📖 关联原错题（共 ${p.questions.length} 道，点击自测）</span>
+                    <span>展开自测 ▼</span>
+                  </button>
+                  <div class="q-list">${qsHtml}</div>
+                </div>
+              `}
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      container.querySelectorAll(".master-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.id;
+          if (masteredSet.has(id)) masteredSet.delete(id);
+          else masteredSet.add(id);
+          saveMastered();
+          render();
+        });
+      });
+    }
+
+    document.getElementById("subjectTabs").addEventListener("click", e => {
+      const btn = e.target.closest(".tab-btn");
+      if (!btn) return;
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      state.subject = btn.dataset.sub;
+      render();
+    });
+    document.getElementById("searchInput").addEventListener("input", e => {
+      state.query = e.target.value;
+      render();
+    });
+    document.getElementById("filterHot").addEventListener("click", e => {
+      state.onlyHot = !state.onlyHot;
+      e.target.classList.toggle("active", state.onlyHot);
+      render();
+    });
+    document.getElementById("filterUnmastered").addEventListener("click", e => {
+      state.onlyUnmastered = !state.onlyUnmastered;
+      e.target.classList.toggle("active", state.onlyUnmastered);
+      render();
+    });
+    document.getElementById("toggleCompact").addEventListener("click", e => {
+      state.compact = !state.compact;
+      e.target.classList.toggle("active", state.compact);
+      render();
+    });
+    document.getElementById("openSyncModal").addEventListener("click", () => {
+      document.getElementById("syncModal").classList.add("show");
+    });
+    document.getElementById("closeSyncModal").addEventListener("click", () => {
+      document.getElementById("syncModal").classList.remove("show");
+    });
+    document.getElementById("syncModal").addEventListener("click", e => {
+      if (e.target.id === "syncModal") e.target.classList.remove("show");
+    });
+
+    render();
+  </script>
+</body>
+</html>
